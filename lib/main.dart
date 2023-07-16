@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
 import 'package:task_manager_codeclause/screens/onAppStart.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
-
           title: 'Todo App',
           theme: ThemeData(
             scaffoldBackgroundColor: constApp.cDark,

@@ -30,7 +30,7 @@ class pageTwo extends StatelessWidget {
               width: constApp.widthApp * 0.9,
               height: constApp.heightApp * 0.06,
               color: constApp.cLight,
-              text: "Login with Phone number")
+              text: "Login with Gmail")
         ],
       ),
     );
