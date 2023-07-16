@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:task_manager_codeclause/reusable/appStyle.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
 import 'package:task_manager_codeclause/reusable/textWidgets.dart';
 import 'package:task_manager_codeclause/screens/pageOne.dart';
 import 'package:task_manager_codeclause/screens/pageTwo.dart';
+
+import 'loginScreen.dart';
 
 class onAppStart extends StatefulWidget {
   const onAppStart({super.key});
@@ -43,19 +46,44 @@ class _onAppStartState extends State<onAppStart> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: null,
-                    child: const Icon(Ionicons.chevron_forward_circle,
-                        size: 30, color: constApp.cLight),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => loginPage()));
+                        },
+                        child: const Icon(Ionicons.chevron_forward_circle,
+                            size: 30, color: constApp.cLight),
+                      ),
+                      const SizedBox(width: 5),
+                      textWidget(
+                          text: "Skip",
+                          style:
+                              appStyle(16, constApp.cLight, FontWeight.w500)),
+                    ],
                   ),
-                  const SizedBox(width: 5),
-                  textWidget(
-                      text: "Skip",
-                      style: appStyle(16, constApp.cLight, FontWeight.w500)),
+                  GestureDetector(
+                    onTap: () {
+                      onboardingScreenController.nextPage(
+                          duration: const Duration(microseconds: 600),
+                          curve: Curves.ease);
+                    },
+                    child: SmoothPageIndicator(
+                      controller: onboardingScreenController,
+                      count: 2,
+                      effect: const WormEffect(
+                        dotHeight: 12,
+                        dotWidth: 16,
+                        spacing: 10,
+                        dotColor: constApp.cYellow,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

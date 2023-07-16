@@ -7,9 +7,9 @@ class textWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        maxLines: 1,
+        maxLines: 2,
         textAlign: TextAlign.left,
-        softWrap: false,
+        softWrap: true,
         overflow: TextOverflow.fade,
         style : style,
     );
