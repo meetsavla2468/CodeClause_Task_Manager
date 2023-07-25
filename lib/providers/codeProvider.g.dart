@@ -6,7 +6,7 @@ part of 'codeProvider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$codeStateHash() => r'633477d42b681196934f4cba9c4dd7dd1d353e08';
+String _$codeStateHash() => r'596c8ca198eab501e09a185631422e3753d5a71a';
 
 /// See also [codeState].
 @ProviderFor(codeState)
