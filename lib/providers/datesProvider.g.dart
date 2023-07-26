@@ -6,7 +6,7 @@ part of 'datesProvider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$datesStateHash() => r'da9b068946f895950d232fb24b8da7c59d0b1063';
+String _$datesStateHash() => r'6e3d978b20945f2e0001376b3a005f4abfe46150';
 
 /// See also [datesState].
 @ProviderFor(datesState)
@@ -21,7 +21,7 @@ final datesStateProvider =
 );
 
 typedef _$datesState = AutoDisposeNotifier<String>;
-String _$startTimeStateHash() => r'af04d90d44f1167e659114402ea2e7cd877bcfa3';
+String _$startTimeStateHash() => r'08bfa005ba6a4d672f308123c0d061368b23472f';
 
 /// See also [startTimeState].
 @ProviderFor(startTimeState)
@@ -37,7 +37,7 @@ final startTimeStateProvider =
 );
 
 typedef _$startTimeState = AutoDisposeNotifier<String>;
-String _$finishTimeStateHash() => r'b69534f55fa6f1c2c9a0ab25b098df5b471f84ae';
+String _$finishTimeStateHash() => r'55c10353dcf3b063acb5a9fec6060506384367a8';
 
 /// See also [finishTimeState].
 @ProviderFor(finishTimeState)

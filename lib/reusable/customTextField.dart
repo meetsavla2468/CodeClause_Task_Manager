@@ -10,11 +10,13 @@ class textFieldCustom extends StatelessWidget {
       this.suffixIcon,
       this.prefixIcon,
       required this.controller,
-      this.onChanged});
+      this.onChanged,
+      this.hintStyle});
   final TextInputType? keyBoardType;
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final TextStyle? hintStyle;
   final TextEditingController controller;
   final void Function(String)? onChanged;
   @override
@@ -33,6 +35,7 @@ class textFieldCustom extends StatelessWidget {
         style: appStyle(18, constApp.ctmGrey, FontWeight.w700),
         decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: hintStyle,
             suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
             suffixIconColor: constApp.cDark,
