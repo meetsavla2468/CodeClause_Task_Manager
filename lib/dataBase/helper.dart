@@ -6,14 +6,18 @@ class dataBaseHelper {
   static Future<void> createTables(sql.Database database) async {
     await database.execute(
       "CREATE TABLE todos("
-      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-      "title STRING, desc TEXT, date STRING "
-      "startTime STRING, endTime STRING, "
-      "remind INTEGER, repeat String, "
+      "id INTEGER PRIMARY KEY, "
+      "title STRING, "
+      "desc TEXT, "
+      "date STRING, "
+      "startTime STRING, "
+      "endTime STRING, "
+      "reminder INTEGER, "
+      "repeat String, "
       "isCompleted INTEGER)",
     );
     await database.execute("CREATE TABLE user("
-        "id INTEGER PRIMARY KEY AUTO INCREMENT DEFAULT 0, "
+        "id INTEGER PRIMARY KEY, "
         "isVerified INTEGER)");
   }
 

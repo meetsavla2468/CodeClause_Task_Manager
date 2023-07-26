@@ -26,6 +26,9 @@ class _addTaskState extends ConsumerState<addTask> {
     var scheduleDate = ref.watch(datesStateProvider);
     var scheduleStartTime = ref.watch(startTimeStateProvider);
     var scheduleEndTime = ref.watch(finishTimeStateProvider);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: constApp.cDark,
@@ -51,8 +54,9 @@ class _addTaskState extends ConsumerState<addTask> {
                 onTap: () {
                   picker.DatePicker.showDatePicker(context,
                       showTitleActions: true,
-                      minTime: DateTime(2023, 8, 1),
-                      maxTime: DateTime(2024, 8, 1),
+
+                      minTime: DateTime(date.year, date.month, date.day),
+                      maxTime: DateTime(date.year+1, date.month, date.day),
                       theme: const picker.DatePickerTheme(
                           doneStyle:
                               TextStyle(color: constApp.cGreen, fontSize: 16)),
@@ -77,8 +81,8 @@ class _addTaskState extends ConsumerState<addTask> {
                     onTap: () {
                       picker.DatePicker.showDateTimePicker(context,
                           showTitleActions: true,
-                          minTime: DateTime(2023, 8, 1, 00, 00),
-                          maxTime: DateTime(2024, 8, 1, 23, 59),
+                          minTime: DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second),
+                          maxTime: DateTime(date.year+1, date.month, date.day, 11, 59, 59),
                           onConfirm: (date) {
                         ref
                             .read(startTimeStateProvider.notifier)
@@ -93,13 +97,13 @@ class _addTaskState extends ConsumerState<addTask> {
                     color2: constApp.cBlueLight,
                     text: scheduleStartTime == ""
                         ? "Start Time"
-                        : scheduleStartTime.substring(11, 19)),
+                        : scheduleStartTime.substring(11, 16)),
                 buttonReusable(
                     onTap: () {
                       picker.DatePicker.showDateTimePicker(context,
                           showTitleActions: true,
-                          minTime: DateTime(2023, 8, 1, 00, 00),
-                          maxTime: DateTime(2024, 8, 1, 23, 59),
+                          minTime: DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second),
+                          maxTime: DateTime(date.year+1, date.month, date.day, 11, 59, 59),
                           onConfirm: (date) {
                         ref
                             .read(finishTimeStateProvider.notifier)
@@ -114,7 +118,7 @@ class _addTaskState extends ConsumerState<addTask> {
                     color2: constApp.cBlueLight,
                     text: scheduleEndTime == ""
                         ? "End Time"
-                        : scheduleEndTime.substring(11, 19)),
+                        : scheduleEndTime.substring(11, 16)),
               ],
             ),
             const SizedBox(height: 20),
@@ -130,8 +134,8 @@ class _addTaskState extends ConsumerState<addTask> {
                       desc: desc.text,
                       isCompleted: 0,
                       date: scheduleDate,
-                      startTime: scheduleStartTime.substring(10, 19),
-                      endTime: scheduleEndTime.substring(10, 19),
+                      startTime: scheduleStartTime.substring(10, 16),
+                      endTime: scheduleEndTime.substring(10, 16),
                       reminder: 0,
                       repeat: "yes",
                     );
@@ -141,6 +145,7 @@ class _addTaskState extends ConsumerState<addTask> {
                         .setFinishTime('');
                     ref.read(startTimeStateProvider.notifier).setStartTime('');
                     ref.read(datesStateProvider.notifier).setDate('');
+                    print("Task addition successful");
                     Navigator.pop(context);
                   } else {
                     print("Addition of task unsuccessful");
