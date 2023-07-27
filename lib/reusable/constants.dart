@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class constApp{
+class constApp {
   constApp._();
 
   static const Color cDark = Color(0xFF2a2b2e);
@@ -18,3 +18,11 @@ class constApp{
   static double widthApp = 375.w;
   static double heightApp = 825.h;
 }
+
+List<dynamic> colors = const [
+  Color(0xFFd80000),
+  Color(0xFF027eb5),
+  Color(0xFF20a31E),
+  Color(0xFFF9F900),
+  Color(0xFF202c33),
+];

@@ -12,6 +12,8 @@ import 'package:task_manager_codeclause/reusable/expansionTile.dart';
 import 'package:task_manager_codeclause/reusable/textWidgets.dart';
 import 'package:task_manager_codeclause/screens/addTask.dart';
 import 'package:task_manager_codeclause/screens/taskTile.dart';
+import 'package:task_manager_codeclause/screens/todayTask.dart';
+import 'package:task_manager_codeclause/screens/tomorrowTask.dart';
 
 class homePage extends ConsumerStatefulWidget {
   const homePage({super.key});
@@ -159,7 +161,7 @@ class _homePageState extends ConsumerState<homePage>
                         Container(
                           color: constApp.cBlueLight,
                           height: constApp.heightApp * 0.3,
-                          child: TodayTask(),
+                          child: const TodayTask(),
                         ),
                         Container(
                           color: constApp.cLight,
@@ -170,29 +172,7 @@ class _homePageState extends ConsumerState<homePage>
                   ),
                 ),
                 const SizedBox(height: 20),
-                expansionTile(
-                    text: "Tomorrow's Task",
-                    text2: "Tomorrow's task are shown here",
-                    onExpansionChanged: (bool expanded) {
-                      ref
-                          .read(expansionStateProvider.notifier)
-                          .setStart(!expanded);
-                    },
-                    trailing: Padding(
-                      padding: EdgeInsets.only(right: 12.0.w),
-                      child: ref.watch(expansionStateProvider)
-                          ? const Icon(AntDesign.circledown,
-                              color: constApp.cDark)
-                          : const Icon(AntDesign.closecircleo,
-                              color: constApp.cBlueLight),
-                    ),
-                    children: [
-                      taskTile(
-                        start: "03:00",
-                        end: "05:00",
-                        switcher: Switch(value: true, onChanged: (value) {}),
-                      ),
-                    ]),
+                const tomorrowTask(),
                 const SizedBox(height: 20),
                 expansionTile(
                     text: DateTime.now()
@@ -224,29 +204,5 @@ class _homePageState extends ConsumerState<homePage>
             ),
           ),
         ));
-  }
-}
-
-class TodayTask extends ConsumerWidget {
-  const TodayTask({
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    List<TaskModel> listData = ref.read(todoStateProvider);
-    String today = ref.read(todoStateProvider.notifier).getToday();
-    var todayList = listData.where(
-        (element) => element.isCompleted == 0 && element.date!.contains(today)).toList();
-    return ListView.builder(
-        itemCount: todayList.length, itemBuilder: (context, index) {
-          final data = todayList[index];
-          return taskTile(
-            title: data.title,
-            color: constApp.cGreen,
-            desc: data.desc,
-            start: data.startTime,
-            end: data.endTime,
-          );
-    });
   }
 }
