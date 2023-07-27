@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
-import 'package:task_manager_codeclause/screens/homePage.dart';
+import 'package:task_manager_codeclause/screens/onAppStart.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                   colorScheme: darkColorScheme ?? defaultDarkColorScheme,
                 ),
                 themeMode: ThemeMode.dark,
-                home: const homePage(),
+                home: const onAppStart(),
                 debugShowCheckedModeBanner: false,
               );
             },

@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:task_manager_codeclause/models/taskModel.dart';
-import 'package:task_manager_codeclause/providers/expansionProvider.dart';
 import 'package:task_manager_codeclause/providers/todoProvider.dart';
 import 'package:task_manager_codeclause/reusable/appStyle.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
 import 'package:task_manager_codeclause/reusable/customTextField.dart';
-import 'package:task_manager_codeclause/reusable/expansionTile.dart';
 import 'package:task_manager_codeclause/reusable/textWidgets.dart';
 import 'package:task_manager_codeclause/screens/addTask.dart';
 import 'package:task_manager_codeclause/screens/completedTask.dart';
 import 'package:task_manager_codeclause/screens/dayAfterTomorrow.dart';
-import 'package:task_manager_codeclause/screens/taskTile.dart';
+import 'package:task_manager_codeclause/screens/notification_service.dart';
 import 'package:task_manager_codeclause/screens/todayTask.dart';
 import 'package:task_manager_codeclause/screens/tomorrowTask.dart';
 
@@ -28,8 +25,20 @@ class _homePageState extends ConsumerState<homePage>
     with TickerProviderStateMixin {
   late final TabController tabController =
       TabController(length: 2, vsync: this);
+  late NotificationsHelper notifierHelper;
+  late NotificationsHelper controller;
   final TextEditingController search = TextEditingController();
   @override
+  void initState() {
+    // TODO: implement initState
+    notifierHelper = NotificationsHelper(ref: ref);
+    Future.delayed(const Duration(seconds: 0), () {
+      controller = NotificationsHelper(ref: ref);
+    });
+    notifierHelper.initializeNotifications();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     ref.watch(todoStateProvider.notifier).refresh();
     return Scaffold(

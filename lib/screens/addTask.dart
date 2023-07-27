@@ -11,6 +11,8 @@ import 'package:task_manager_codeclause/reusable/customTextField.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as picker;
 
+import 'notification_service.dart';
+
 class addTask extends ConsumerStatefulWidget {
   const addTask({super.key});
 
@@ -21,7 +23,20 @@ class addTask extends ConsumerStatefulWidget {
 class _addTaskState extends ConsumerState<addTask> {
   final TextEditingController title = TextEditingController();
   final TextEditingController desc = TextEditingController();
+  List<int> notification = [];
+  late NotificationsHelper notifierHelper;
+  late NotificationsHelper controller;
   @override
+  void initState() {
+    // TODO: implement initState
+    notifierHelper = NotificationsHelper(ref: ref);
+    Future.delayed(const Duration(seconds: 0), () {
+      controller = NotificationsHelper(ref: ref);
+    });
+    notifierHelper.initializeNotifications();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     var scheduleDate = ref.watch(datesStateProvider);
     var scheduleStartTime = ref.watch(startTimeStateProvider);
@@ -54,9 +69,8 @@ class _addTaskState extends ConsumerState<addTask> {
                 onTap: () {
                   picker.DatePicker.showDatePicker(context,
                       showTitleActions: true,
-
                       minTime: DateTime(date.year, date.month, date.day),
-                      maxTime: DateTime(date.year+1, date.month, date.day),
+                      maxTime: DateTime(date.year + 1, date.month, date.day),
                       theme: const picker.DatePickerTheme(
                           doneStyle:
                               TextStyle(color: constApp.cGreen, fontSize: 16)),
@@ -81,12 +95,17 @@ class _addTaskState extends ConsumerState<addTask> {
                     onTap: () {
                       picker.DatePicker.showDateTimePicker(context,
                           showTitleActions: true,
-                          minTime: DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second),
-                          maxTime: DateTime(date.year+1, date.month, date.day, 11, 59, 59),
+                          minTime: DateTime(date.year, date.month, date.day,
+                              date.hour, date.minute, date.second),
+                          maxTime: DateTime(
+                              date.year + 1, date.month, date.day, 11, 59, 59),
                           onConfirm: (date) {
                         ref
                             .read(startTimeStateProvider.notifier)
                             .setStartTime(date.toString());
+                        notification = ref
+                            .read(startTimeStateProvider.notifier)
+                            .dates(date);
                       },
                           currentTime: DateTime.now(),
                           locale: picker.LocaleType.en);
@@ -102,8 +121,10 @@ class _addTaskState extends ConsumerState<addTask> {
                     onTap: () {
                       picker.DatePicker.showDateTimePicker(context,
                           showTitleActions: true,
-                          minTime: DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second),
-                          maxTime: DateTime(date.year+1, date.month, date.day, 11, 59, 59),
+                          minTime: DateTime(date.year, date.month, date.day,
+                              date.hour, date.minute, date.second),
+                          maxTime: DateTime(
+                              date.year + 1, date.month, date.day, 11, 59, 59),
                           onConfirm: (date) {
                         ref
                             .read(finishTimeStateProvider.notifier)
@@ -139,6 +160,12 @@ class _addTaskState extends ConsumerState<addTask> {
                       reminder: 0,
                       repeat: "yes",
                     );
+                    notifierHelper.scheduleNotification(
+                        notification[0],
+                        notification[1],
+                        notification[2],
+                        notification[3],
+                        task);
                     ref.read(todoStateProvider.notifier).addItem(task);
                     ref
                         .read(finishTimeStateProvider.notifier)
