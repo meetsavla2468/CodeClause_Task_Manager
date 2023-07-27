@@ -3,37 +3,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:task_manager_codeclause/providers/todoProvider.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
 import 'package:task_manager_codeclause/screens/taskTile.dart';
 import 'package:task_manager_codeclause/screens/updateTask.dart';
 import '../providers/expansionProvider.dart';
+import '../providers/todoProvider.dart';
 import '../reusable/expansionTile.dart';
 
-class tomorrowTask extends ConsumerWidget {
-  const tomorrowTask({super.key});
+class dayAfterTomorrowTask extends ConsumerWidget {
+  const dayAfterTomorrowTask({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todos = ref.watch(todoStateProvider);
+    final todos1 = ref.watch(todoStateProvider);
     final color = ref.read(todoStateProvider.notifier).getRandomColor();
-    String tomorrow = ref.read(todoStateProvider.notifier).getTomorrow();
-    var tomorrowTasks =
-        todos.where((element) => element.date!.contains(tomorrow));
+    String dayAfterTomorrow = ref.read(todoStateProvider.notifier).getdayAfterTomorrow();
+    var dayAfterTomorrowTasks = todos1.where((element) => element.date!.contains(dayAfterTomorrow));
     return expansionTile(
-        text: "Tomorrow's Task",
-        text2: "Tomorrow's task are shown here",
+        text: DateTime.now()
+            .add(const Duration(days: 2))
+            .toString()
+            .substring(5, 10),
+        text2: "Day after tomorrow's task are \nshown here",
         onExpansionChanged: (bool expanded) {
-          ref.read(expansionStateProvider.notifier).setStart(!expanded);
+          ref
+              .read(expansionState0Provider.notifier)
+              .setStart(!expanded);
         },
         trailing: Padding(
           padding: EdgeInsets.only(right: 12.0.w, top: 20.h),
-          child: ref.watch(expansionStateProvider)
-              ? const Icon(AntDesign.circledown, color: constApp.cDark)
-              : const Icon(AntDesign.closecircleo, color: constApp.cBlueLight),
+          child: ref.watch(expansionState0Provider)
+              ? const Icon(AntDesign.circledown,
+              color: constApp.cDark)
+              : const Icon(AntDesign.closecircleo,
+              color: constApp.cBlueLight),
         ),
         children: [
-          for (final todo in tomorrowTasks)
+          for(final todo in dayAfterTomorrowTasks)
             taskTile(
               delete: () {
                 ref.read(todoStateProvider.notifier).deleteTodo(todo.id ?? 0);
@@ -42,10 +48,7 @@ class tomorrowTask extends ConsumerWidget {
                 onTap: () {
                   titles = todo.title.toString();
                   descs = todo.desc.toString();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => updateTask(id: todo.id!)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => updateTask(id : todo.id!)));
                 },
                 child: const Icon(MaterialCommunityIcons.circle_edit_outline),
               ),

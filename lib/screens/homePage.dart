@@ -11,6 +11,8 @@ import 'package:task_manager_codeclause/reusable/customTextField.dart';
 import 'package:task_manager_codeclause/reusable/expansionTile.dart';
 import 'package:task_manager_codeclause/reusable/textWidgets.dart';
 import 'package:task_manager_codeclause/screens/addTask.dart';
+import 'package:task_manager_codeclause/screens/completedTask.dart';
+import 'package:task_manager_codeclause/screens/dayAfterTomorrow.dart';
 import 'package:task_manager_codeclause/screens/taskTile.dart';
 import 'package:task_manager_codeclause/screens/todayTask.dart';
 import 'package:task_manager_codeclause/screens/tomorrowTask.dart';
@@ -166,6 +168,7 @@ class _homePageState extends ConsumerState<homePage>
                         Container(
                           color: constApp.cLight,
                           height: constApp.heightApp * 0.3,
+                          child: const completedTask(),
                         ),
                       ],
                     ),
@@ -174,32 +177,7 @@ class _homePageState extends ConsumerState<homePage>
                 const SizedBox(height: 20),
                 const tomorrowTask(),
                 const SizedBox(height: 20),
-                expansionTile(
-                    text: DateTime.now()
-                        .add(const Duration(days: 2))
-                        .toString()
-                        .substring(5, 10),
-                    text2: "Day after tomorrow's task are \nshown here",
-                    onExpansionChanged: (bool expanded) {
-                      ref
-                          .read(expansionState0Provider.notifier)
-                          .setStart(!expanded);
-                    },
-                    trailing: Padding(
-                      padding: EdgeInsets.only(right: 12.w),
-                      child: ref.watch(expansionState0Provider)
-                          ? const Icon(AntDesign.circledown,
-                              color: constApp.cDark)
-                          : const Icon(AntDesign.closecircleo,
-                              color: constApp.cBlueLight),
-                    ),
-                    children: [
-                      taskTile(
-                        start: "03:00",
-                        end: "05:00",
-                        switcher: Switch(value: true, onChanged: (value) {}),
-                      ),
-                    ]),
+                const dayAfterTomorrowTask(),
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:task_manager_codeclause/providers/todoProvider.dart';
 import 'package:task_manager_codeclause/reusable/appStyle.dart';
 import 'package:task_manager_codeclause/reusable/constants.dart';
 import 'package:task_manager_codeclause/reusable/textWidgets.dart';
@@ -22,12 +23,13 @@ class BottomTitles extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Consumer(builder: (context, ref, child) {
+              var color = ref.read(todoStateProvider.notifier).getRandomColor();
               return Container(
                 height: 80,
                 width: 5,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: constApp.cGreen,
+                  color: color,
                 ),
               );
             }),
